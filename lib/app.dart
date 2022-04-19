@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:terrains/grid.dart';
+import 'package:terrains/game.dart';
 
 class TerrainsApp extends StatelessWidget {
   const TerrainsApp({Key? key}) : super(key: key);
@@ -17,7 +17,7 @@ class TerrainsApp extends StatelessWidget {
       ),
       home: Scaffold(
         appBar: AppBar(title: const Text('Terrains')),
-        body: const Grid(),
+        body: const TerrainGame(),
       ),
     );
   }

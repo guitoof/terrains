@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:terrains/domain/entities/player.dart';
 
 class TerrainCell extends StatefulWidget {
-  const TerrainCell({Key? key}) : super(key: key);
+  final TerrainPlayer currentPlayer;
+  final VoidCallback onTap;
+
+  const TerrainCell(
+      {Key? key, required this.currentPlayer, required this.onTap})
+      : super(key: key);
 
   @override
   State<TerrainCell> createState() => _TerrainCellState();
@@ -15,8 +21,9 @@ class _TerrainCellState extends State<TerrainCell> {
     return GestureDetector(
       onTap: () {
         setState(() {
-          _color = Colors.black;
+          _color = widget.currentPlayer.color;
         });
+        widget.onTap();
       },
       child: Container(
         color: _color,
