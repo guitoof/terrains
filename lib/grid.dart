@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:terrains/cell.dart';
 
 class Grid extends StatelessWidget {
   const Grid({Key? key}) : super(key: key);
@@ -14,6 +15,7 @@ class Grid extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border.all(width: 1, color: Colors.grey.shade300),
           ),
+          child: const TerrainCell(),
         ),
       ),
     );

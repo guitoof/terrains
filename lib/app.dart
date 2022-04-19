@@ -16,9 +16,7 @@ class TerrainsApp extends StatelessWidget {
         ),
       ),
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Terrains'),
-        ),
+        appBar: AppBar(title: const Text('Terrains')),
         body: const Grid(),
       ),
     );
