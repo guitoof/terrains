@@ -16,14 +16,23 @@ class TerrainCell extends StatefulWidget {
 class _TerrainCellState extends State<TerrainCell> {
   Color _color = Colors.white;
 
+  bool get isBlank => _color == Colors.white;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        setState(() {
-          _color = widget.currentPlayer.color;
-        });
-        widget.onTap();
+        if (!isBlank) {
+          showDialog(
+              context: context,
+              builder: (context) =>
+                  const AlertDialog(title: Text('Terrain is taken !')));
+        } else {
+          setState(() {
+            _color = widget.currentPlayer.color;
+          });
+          widget.onTap();
+        }
       },
       child: Container(
         color: _color,
