@@ -1,13 +1,13 @@
-import 'package:flutter/material.dart';
+import 'package:terrains/domain/entities/terrain.dart';
 
 class TerrainPlayer {
-  final Color color;
+  final Terrain terrain;
 
-  TerrainPlayer({required this.color});
+  TerrainPlayer({required this.terrain});
 
-  factory TerrainPlayer.sea() => TerrainPlayer(color: Colors.blue);
+  factory TerrainPlayer.sea() => TerrainPlayer(terrain: Terrain.sea());
 
-  factory TerrainPlayer.volcano() => TerrainPlayer(color: Colors.red);
+  factory TerrainPlayer.volcano() => TerrainPlayer(terrain: Terrain.volcano());
 
-  factory TerrainPlayer.jungle() => TerrainPlayer(color: Colors.green);
+  factory TerrainPlayer.jungle() => TerrainPlayer(terrain: Terrain.jungle());
 }
