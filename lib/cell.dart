@@ -1,22 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:terrains/domain/entities/player.dart';
+import 'package:terrains/domain/entities/terrain.dart';
 
-class TerrainCell extends StatefulWidget {
-  final TerrainPlayer currentPlayer;
+class TerrainCell extends StatelessWidget {
+  final Terrain? terrain;
   final VoidCallback onTap;
 
-  const TerrainCell(
-      {Key? key, required this.currentPlayer, required this.onTap})
+  const TerrainCell({Key? key, required this.terrain, required this.onTap})
       : super(key: key);
 
-  @override
-  State<TerrainCell> createState() => _TerrainCellState();
-}
-
-class _TerrainCellState extends State<TerrainCell> {
-  Color _color = Colors.white;
-
-  bool get isBlank => _color == Colors.white;
+  bool get isBlank => terrain == null;
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +20,11 @@ class _TerrainCellState extends State<TerrainCell> {
               builder: (context) =>
                   const AlertDialog(title: Text('Terrain is taken !')));
         } else {
-          setState(() {
-            _color = widget.currentPlayer.color;
-          });
-          widget.onTap();
+          onTap();
         }
       },
       child: Container(
-        color: _color,
+        color: terrain != null ? terrain!.color : Colors.white,
       ),
     );
   }
