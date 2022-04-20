@@ -37,11 +37,18 @@ class _TerrainGameState extends State<TerrainGame> {
       child: TerrainGrid(
           data: terrainCubit.state,
           onCellAtPositionTapped: (location) {
-            terrainCubit.addTerrain(Terrain(
-              location: location,
-              color: _players[_currentPlayerIndex].terrain.color,
-            ));
-            _nextPlayer();
+            try {
+              terrainCubit.addTerrain(Terrain(
+                location: location,
+                color: _players[_currentPlayerIndex].terrain.color,
+              ));
+              _nextPlayer();
+            } catch (error) {
+              showDialog(
+                  context: context,
+                  builder: (context) =>
+                      AlertDialog(title: Text(error.toString())));
+            }
           }),
     );
   }
