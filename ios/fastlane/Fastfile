@@ -24,9 +24,10 @@ platform :ios do
             output_directory: "./build/Runner",
             skip_codesigning: true,
             export_method: "enterprise",
+            export_team_id: ENV["IOS_TEAM_ID"],
             export_options: {
               provisioningProfiles: { 
-                "tech.bam.terrains" => "Terrains App Distribution"
+                "tech.bam.terrains" => ENV["IOS_PROVISIONING_PROFILE_ID"]
               }
             }
         )
