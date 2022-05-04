@@ -24,7 +24,11 @@ platform :ios do
             output_directory: "./build/Runner",
             skip_codesigning: true,
             export_method: "enterprise",
-            output_directory: "./build/Runner"
+            export_options: {
+              provisioningProfiles: { 
+                "tech.bam.terrains" => "Terrains App Distribution"
+              }
+            }
         )
         firebase_app_distribution(
             app: "terrains-game",
