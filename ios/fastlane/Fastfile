@@ -16,8 +16,22 @@
 default_platform(:ios)
 
 platform :ios do
-  desc "Description of what the lane does"
-  lane :custom_lane do
-    # add actions here: https://docs.fastlane.tools/actions
-  end
+  desc "Build & Deploy Terrains app to Firebase App Distribution"
+    lane :deploy do
+        build_app(
+            scheme: "Runner",
+            archive_path: "./build/Runner.xcarchive",
+            output_directory: "./build/Runner",
+            skip_codesigning: true,
+            export_method: "enterprise",
+            output_directory: "./build/Runner"
+        )
+        firebase_app_distribution(
+            app: "terrains-game",
+            testers: "guillaumedm@bam.tech",
+            release_notes: "Initial test version",
+            firebase_cli_path: "/usr/local/bin/firebase",
+            ipa_path: "./build/Runner/Runner.ipa"
+        )
+    end
 end
