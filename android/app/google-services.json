@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "314214328555",
+    "firebase_url": "https://terrains-game-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "terrains-game",
+    "storage_bucket": "terrains-game.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:314214328555:android:4137b7253b97abc262f6ae",
+        "android_client_info": {
+          "package_name": "tech.bam.terrains"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "314214328555-3eu4mjcqpc995dlvb3pgriud5rnliicr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdVLseFPRvsxYAbajc9ydopnY6tVlEiUk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "314214328555-3eu4mjcqpc995dlvb3pgriud5rnliicr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "314214328555-itm457lv34ijopceeo64g5it614csdgt.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.terrains"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
