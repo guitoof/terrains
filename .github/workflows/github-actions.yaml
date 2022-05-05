@@ -1,0 +1,14 @@
+name: Terrains App main CD
+on:
+  push:
+    branches:
+      - main
+jobs:
+  Build-and-Deploy:
+    runs-on: macos-latest
+    steps:
+      - name: Build and deploy with fastlane
+        uses: maierj/fastlane-action@v1.4.0
+        with: 
+          lane: deploy
+          subdirectory: 'ios'
