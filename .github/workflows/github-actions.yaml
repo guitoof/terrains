@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - chore/setup-ios-deployment
 jobs:
   Build-and-Deploy:
     runs-on: macos-latest
