@@ -32,7 +32,7 @@ platform :ios do
             }
         )
         firebase_app_distribution(
-            app: "terrains-game",
+            app: ENV["FIREBASE_IOS_APP_ID"],
             testers: "guillaumedm@bam.tech",
             release_notes: "Initial test version",
             firebase_cli_path: "/usr/local/bin/firebase",
