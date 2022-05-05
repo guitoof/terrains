@@ -1,4 +1,4 @@
-package com.example.terrains
+package tech.bam.terrains
 
 import io.flutter.embedding.android.FlutterActivity
 

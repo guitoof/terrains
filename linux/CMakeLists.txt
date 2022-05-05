@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 project(runner LANGUAGES CXX)
 
 set(BINARY_NAME "terrains")
-set(APPLICATION_ID "com.example.terrains")
+set(APPLICATION_ID "tech.bam.terrains")
 
 cmake_policy(SET CMP0063 NEW)
 

@@ -1,0 +1,42 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Build & Deploy Terrains app to Firebase App Distribution"
+    lane :deploy do
+        build_app(
+            scheme: "Runner",
+            archive_path: "./build/Runner.xcarchive",
+            output_directory: "./build/Runner",
+            skip_codesigning: true,
+            export_method: "enterprise",
+            export_team_id: ENV["IOS_TEAM_ID"],
+            export_options: {
+              provisioningProfiles: { 
+                "tech.bam.terrains" => ENV["IOS_PROVISIONING_PROFILE_ID"]
+              }
+            }
+        )
+        firebase_app_distribution(
+            app: ENV["FIREBASE_IOS_APP_ID"],
+            testers: "guillaumedm@bam.tech",
+            release_notes: "Initial test version",
+            firebase_cli_path: "/usr/local/bin/firebase",
+            ipa_path: "./build/Runner/Runner.ipa"
+        )
+    end
+end
