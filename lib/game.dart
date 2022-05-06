@@ -41,7 +41,7 @@ class _TerrainGameState extends State<TerrainGame> {
             try {
               widget.terrainCubit.addTerrain(Terrain(
                 location: location,
-                color: _players[_currentPlayerIndex].terrain.color,
+                type: _players[_currentPlayerIndex].terrain.type,
               ));
               _nextPlayer();
             } catch (error) {

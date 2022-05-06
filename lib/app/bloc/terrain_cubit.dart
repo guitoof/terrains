@@ -14,11 +14,13 @@ class TerrainCubit extends Cubit<List<List<Terrain?>>> {
         ) {
     _gameRepository.listenToGame((data) {
       final newTerrainGrid = state;
-      final newTerrainGridJson = data as Map<String, dynamic>;
-      final lastTerrainData =
-          (newTerrainGridJson['terrains'] as Map<String, dynamic>).entries.last;
+      if (data is! Map) {
+        return;
+      }
+      final lastTerrainData = data['terrains'].entries.last;
       final Terrain lastTerrain = Terrain(
-        color: lastTerrainData.value['color'],
+        type: TerrainType.values
+            .firstWhere((t) => lastTerrainData.value['type'] == t.toString()),
         location: Point(
           lastTerrainData.value['location']['x'],
           lastTerrainData.value['location']['y'],
@@ -33,7 +35,7 @@ class TerrainCubit extends Cubit<List<List<Terrain?>>> {
   bool _isNeighbourTerrainDifferent(
       Terrain terrain, Terrain? neighbourTerrain) {
     if (neighbourTerrain == null) return false;
-    return terrain.color != neighbourTerrain.color;
+    return terrain.type != neighbourTerrain.type;
   }
 
   List<Terrain?> _getNeighbours(Terrain terrain) {

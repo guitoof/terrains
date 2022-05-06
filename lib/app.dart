@@ -1,8 +1,5 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:terrains/app/bloc/game_cubit.dart';
 import 'package:terrains/app/bloc/terrain_cubit.dart';
-import 'package:terrains/database.dart';
 import 'package:terrains/game.dart';
 import 'package:firebase_database/firebase_database.dart';
 
