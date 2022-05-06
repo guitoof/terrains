@@ -13,4 +13,11 @@ class Terrain {
   factory Terrain.volcano() => Terrain(color: Colors.red);
 
   factory Terrain.jungle() => Terrain(color: Colors.green);
+
+  String get key => '${location!.x}-${location!.y}';
+
+  Map<String, dynamic> toJson() => {
+        'color': color.value,
+        'location': {'x': location!.x, 'y': location!.y}
+      };
 }

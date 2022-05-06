@@ -1,8 +1,29 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:terrains/app/bloc/game_cubit.dart';
+import 'package:terrains/app/bloc/terrain_cubit.dart';
+import 'package:terrains/database.dart';
 import 'package:terrains/game.dart';
+import 'package:firebase_database/firebase_database.dart';
 
-class TerrainsApp extends StatelessWidget {
+FirebaseDatabase database = FirebaseDatabase.instance;
+
+class TerrainsApp extends StatefulWidget {
   const TerrainsApp({Key? key}) : super(key: key);
+
+  @override
+  State<TerrainsApp> createState() => _TerrainsAppState();
+}
+
+class _TerrainsAppState extends State<TerrainsApp> {
+  TerrainCubit? _terrainCubit;
+
+  void _startGame() async {
+    GameCubit().startGame(10, 20);
+    setState(() {
+      _terrainCubit = TerrainCubit(10, 20);
+    });
+  }
 
   // This widget is the root of your application.
   @override
@@ -17,7 +38,11 @@ class TerrainsApp extends StatelessWidget {
       ),
       home: Scaffold(
         appBar: AppBar(title: const Text('Terrains')),
-        body: const TerrainGame(),
+        body: _terrainCubit != null
+            ? TerrainGame(terrainCubit: _terrainCubit!)
+            : Center(
+                child: ElevatedButton(
+                    onPressed: _startGame, child: const Text("Start game"))),
       ),
     );
   }

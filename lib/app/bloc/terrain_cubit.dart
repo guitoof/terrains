@@ -1,7 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:terrains/data/repositories/game_repository.dart';
 import 'package:terrains/domain/entities/terrain.dart';
 
 class TerrainCubit extends Cubit<List<List<Terrain?>>> {
+  final GameRepository _gameRepository = GameRepository();
   final differentNeighbouringTerrainsLimit = 2;
 
   TerrainCubit(int width, int height)
@@ -51,6 +53,7 @@ class TerrainCubit extends Cubit<List<List<Terrain?>>> {
       throw Exception(
           'Terrain cannot be placed near more than 2 different terrains');
     }
+    _gameRepository.addTerrain(terrain);
     final newTerrainGrid = state;
     newTerrainGrid[terrain.location!.y][terrain.location!.x] = terrain;
     emit(newTerrainGrid);

@@ -9,7 +9,9 @@ const int gridWidth = 10;
 const int gridHeight = 19;
 
 class TerrainGame extends StatefulWidget {
-  const TerrainGame({Key? key}) : super(key: key);
+  final TerrainCubit terrainCubit;
+
+  const TerrainGame({Key? key, required this.terrainCubit}) : super(key: key);
 
   @override
   State<TerrainGame> createState() => _TerrainGameState();
@@ -22,7 +24,6 @@ class _TerrainGameState extends State<TerrainGame> {
     TerrainPlayer.volcano()
   ];
   int _currentPlayerIndex = 0;
-  final terrainCubit = TerrainCubit(gridWidth, gridHeight);
 
   _nextPlayer() {
     setState(() {
@@ -33,12 +34,12 @@ class _TerrainGameState extends State<TerrainGame> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => terrainCubit,
+      create: (_) => widget.terrainCubit,
       child: TerrainGrid(
-          data: terrainCubit.state,
+          data: widget.terrainCubit.state,
           onCellAtPositionTapped: (location) {
             try {
-              terrainCubit.addTerrain(Terrain(
+              widget.terrainCubit.addTerrain(Terrain(
                 location: location,
                 color: _players[_currentPlayerIndex].terrain.color,
               ));
