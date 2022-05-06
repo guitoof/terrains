@@ -13,4 +13,13 @@ class GameRepository {
     DatabaseReference ref = getDatabaseFromApp().ref();
     await ref.update({'terrains/${terrain.key}': terrain.toJson()});
   }
+
+  void listenToGame(void Function(Object? data) onGameUpdated) {
+    DatabaseReference ref = getDatabaseFromApp().ref();
+    ref.onValue.listen((DatabaseEvent event) {
+      if (event.snapshot.exists) {
+        onGameUpdated.call(event.snapshot.value);
+      }
+    });
+  }
 }

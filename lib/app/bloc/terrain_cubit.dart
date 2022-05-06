@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:terrains/data/repositories/game_repository.dart';
 import 'package:terrains/domain/entities/terrain.dart';
@@ -9,7 +11,24 @@ class TerrainCubit extends Cubit<List<List<Terrain?>>> {
   TerrainCubit(int width, int height)
       : super(
           List.generate(height, (_) => List.generate(width, (_) => null)),
-        );
+        ) {
+    _gameRepository.listenToGame((data) {
+      final newTerrainGrid = state;
+      final newTerrainGridJson = data as Map<String, dynamic>;
+      final lastTerrainData =
+          (newTerrainGridJson['terrains'] as Map<String, dynamic>).entries.last;
+      final Terrain lastTerrain = Terrain(
+        color: lastTerrainData.value['color'],
+        location: Point(
+          lastTerrainData.value['location']['x'],
+          lastTerrainData.value['location']['y'],
+        ),
+      );
+      newTerrainGrid[lastTerrain.location!.y][lastTerrain.location!.x] =
+          lastTerrain;
+      emit(newTerrainGrid);
+    });
+  }
 
   bool _isNeighbourTerrainDifferent(
       Terrain terrain, Terrain? neighbourTerrain) {
