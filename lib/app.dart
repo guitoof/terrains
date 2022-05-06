@@ -19,7 +19,6 @@ class _TerrainsAppState extends State<TerrainsApp> {
   TerrainCubit? _terrainCubit;
 
   void _startGame() async {
-    GameCubit().startGame(10, 20);
     setState(() {
       _terrainCubit = TerrainCubit(10, 20);
     });
