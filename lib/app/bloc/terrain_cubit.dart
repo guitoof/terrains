@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,29 +8,25 @@ import 'package:terrains/domain/entities/terrain.dart';
 class TerrainCubit extends Cubit<List<List<Terrain?>>> {
   final GameRepository _gameRepository = GameRepository();
   final differentNeighbouringTerrainsLimit = 2;
+  final int width;
+  final int height;
 
-  TerrainCubit(int width, int height)
-      : super(
-          List.generate(height, (_) => List.generate(width, (_) => null)),
-        ) {
-    _gameRepository.listenToGame((data) {
-      final newTerrainGrid = state;
-      if (data is! Map) {
-        return;
-      }
-      final lastTerrainData = data['terrains'].entries.last;
-      final Terrain lastTerrain = Terrain(
-        type: TerrainType.values
-            .firstWhere((t) => lastTerrainData.value['type'] == t.toString()),
-        location: Point(
-          lastTerrainData.value['location']['x'],
-          lastTerrainData.value['location']['y'],
-        ),
-      );
-      newTerrainGrid[lastTerrain.location!.y][lastTerrain.location!.x] =
-          lastTerrain;
-      emit(newTerrainGrid);
+  TerrainCubit(this.width, this.height)
+      : super(_getInitialState(width, height)) {
+    _gameRepository.listenToGame(_onGameUpdate);
+  }
+
+  static List<List<Terrain?>> _getInitialState(int width, int height) =>
+      List.generate(height, (_) => List.generate(width, (_) => null));
+
+  void _onGameUpdate(data) {
+    final terrainsData = Map<String, dynamic>.from(data['terrains']);
+    final newState = _getInitialState(width, height);
+    terrainsData.forEach((key, value) {
+      newState[value['location']['y']][value['location']['x']] =
+          Terrain.fromJson(Map<String, dynamic>.from(value));
     });
+    emit(newState);
   }
 
   bool _isNeighbourTerrainDifferent(
@@ -75,8 +72,5 @@ class TerrainCubit extends Cubit<List<List<Terrain?>>> {
           'Terrain cannot be placed near more than 2 different terrains');
     }
     _gameRepository.addTerrain(terrain);
-    final newTerrainGrid = state;
-    newTerrainGrid[terrain.location!.y][terrain.location!.x] = terrain;
-    emit(newTerrainGrid);
   }
 }

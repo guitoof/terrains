@@ -35,6 +35,15 @@ class Terrain {
 
   factory Terrain.jungle() => Terrain(type: TerrainType.jungle);
 
+  factory Terrain.fromJson(Map<String, dynamic> json) => Terrain(
+        type:
+            TerrainType.values.firstWhere((t) => json['type'] == t.toString()),
+        location: Point(
+          json['location']['x'],
+          json['location']['y'],
+        ),
+      );
+
   String get key => '${location!.x}-${location!.y}';
 
   Map<String, dynamic> toJson() => {
