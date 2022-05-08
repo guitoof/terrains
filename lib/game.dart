@@ -5,13 +5,8 @@ import 'package:terrains/domain/entities/player.dart';
 import 'package:terrains/domain/entities/terrain.dart';
 import 'package:terrains/grid.dart';
 
-const int gridWidth = 10;
-const int gridHeight = 19;
-
 class TerrainGame extends StatefulWidget {
-  final TerrainCubit terrainCubit;
-
-  const TerrainGame({Key? key, required this.terrainCubit}) : super(key: key);
+  const TerrainGame({Key? key}) : super(key: key);
 
   @override
   State<TerrainGame> createState() => _TerrainGameState();
@@ -33,13 +28,14 @@ class _TerrainGameState extends State<TerrainGame> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => widget.terrainCubit,
-      child: TerrainGrid(
-          data: widget.terrainCubit.state,
+    final terrainCubit = TerrainCubit(10, 20);
+    return BlocBuilder<TerrainCubit, List<List<Terrain?>>>(
+      bloc: terrainCubit,
+      builder: (context, state) => TerrainGrid(
+          data: state,
           onCellAtPositionTapped: (location) {
             try {
-              widget.terrainCubit.addTerrain(Terrain(
+              terrainCubit.addTerrain(Terrain(
                 location: location,
                 type: _players[_currentPlayerIndex].terrain.type,
               ));

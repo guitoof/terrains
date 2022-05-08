@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:terrains/app/bloc/terrain_cubit.dart';
 import 'package:terrains/game.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -13,11 +12,11 @@ class TerrainsApp extends StatefulWidget {
 }
 
 class _TerrainsAppState extends State<TerrainsApp> {
-  TerrainCubit? _terrainCubit;
+  bool _isGameStarted = false;
 
   void _startGame() async {
     setState(() {
-      _terrainCubit = TerrainCubit(10, 20);
+      _isGameStarted = true;
     });
   }
 
@@ -34,11 +33,14 @@ class _TerrainsAppState extends State<TerrainsApp> {
       ),
       home: Scaffold(
         appBar: AppBar(title: const Text('Terrains')),
-        body: _terrainCubit != null
-            ? TerrainGame(terrainCubit: _terrainCubit!)
+        body: _isGameStarted
+            ? const TerrainGame()
             : Center(
                 child: ElevatedButton(
-                    onPressed: _startGame, child: const Text("Start game"))),
+                  onPressed: _startGame,
+                  child: const Text("Start game"),
+                ),
+              ),
       ),
     );
   }
