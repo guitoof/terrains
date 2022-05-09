@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:terrains/app/bloc/game_cubit.dart';
 import 'package:terrains/game.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -16,6 +17,7 @@ class _TerrainsAppState extends State<TerrainsApp> {
 
   void _startGame() async {
     setState(() {
+      GameCubit().startGame();
       _isGameStarted = true;
     });
   }

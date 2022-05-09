@@ -48,6 +48,6 @@ class Terrain {
 
   Map<String, dynamic> toJson() => {
         'type': type.toString(),
-        'location': {'x': location!.x, 'y': location!.y}
+        if (location != null) 'location': {'x': location!.x, 'y': location!.y}
       };
 }
