@@ -1,18 +1,38 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:terrains/data/repositories/game_repository.dart';
 import 'package:terrains/domain/entities/terrain.dart';
 
 class TerrainCubit extends Cubit<List<List<Terrain?>>> {
+  final GameRepository _gameRepository = GameRepository();
   final differentNeighbouringTerrainsLimit = 2;
+  final int width;
+  final int height;
 
-  TerrainCubit(int width, int height)
-      : super(
-          List.generate(height, (_) => List.generate(width, (_) => null)),
-        );
+  TerrainCubit(this.width, this.height)
+      : super(_getInitialState(width, height)) {
+    _gameRepository.listenToTerrains(_onTerrainsUpdate);
+  }
+
+  static List<List<Terrain?>> _getInitialState(int width, int height) =>
+      List.generate(height, (_) => List.generate(width, (_) => null));
+
+  void _onTerrainsUpdate(data) {
+    final terrainsData = Map<String, dynamic>.from(data);
+    final newState = _getInitialState(width, height);
+    terrainsData.forEach((key, value) {
+      newState[value['location']['y']][value['location']['x']] =
+          Terrain.fromJson(Map<String, dynamic>.from(value));
+    });
+    emit(newState);
+  }
 
   bool _isNeighbourTerrainDifferent(
       Terrain terrain, Terrain? neighbourTerrain) {
     if (neighbourTerrain == null) return false;
-    return terrain.color != neighbourTerrain.color;
+    return terrain.type != neighbourTerrain.type;
   }
 
   List<Terrain?> _getNeighbours(Terrain terrain) {
@@ -51,8 +71,6 @@ class TerrainCubit extends Cubit<List<List<Terrain?>>> {
       throw Exception(
           'Terrain cannot be placed near more than 2 different terrains');
     }
-    final newTerrainGrid = state;
-    newTerrainGrid[terrain.location!.y][terrain.location!.x] = terrain;
-    emit(newTerrainGrid);
+    _gameRepository.addTerrain(terrain);
   }
 }

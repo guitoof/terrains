@@ -39,7 +39,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '314214328555',
     projectId: 'terrains-game',
     authDomain: 'terrains-game.firebaseapp.com',
-    databaseURL: 'https://terrains-game-default-rtdb.europe-west1.firebasedatabase.app',
+    databaseURL:
+        'https://terrains-game-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'terrains-game.appspot.com',
   );
 
@@ -48,7 +49,8 @@ class DefaultFirebaseOptions {
     appId: '1:314214328555:android:4137b7253b97abc262f6ae',
     messagingSenderId: '314214328555',
     projectId: 'terrains-game',
-    databaseURL: 'https://terrains-game-default-rtdb.europe-west1.firebasedatabase.app',
+    databaseURL:
+        'https://terrains-game-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'terrains-game.appspot.com',
   );
 
@@ -57,9 +59,11 @@ class DefaultFirebaseOptions {
     appId: '1:314214328555:ios:ebb700332ebb36a962f6ae',
     messagingSenderId: '314214328555',
     projectId: 'terrains-game',
-    databaseURL: 'https://terrains-game-default-rtdb.europe-west1.firebasedatabase.app',
+    databaseURL:
+        'https://terrains-game-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'terrains-game.appspot.com',
-    iosClientId: '314214328555-atc54gr7b133m1l5345guoc7ls6nemm7.apps.googleusercontent.com',
+    iosClientId:
+        '314214328555-atc54gr7b133m1l5345guoc7ls6nemm7.apps.googleusercontent.com',
     iosBundleId: 'tech.bam.terrains',
   );
 
@@ -68,9 +72,11 @@ class DefaultFirebaseOptions {
     appId: '1:314214328555:ios:ebb700332ebb36a962f6ae',
     messagingSenderId: '314214328555',
     projectId: 'terrains-game',
-    databaseURL: 'https://terrains-game-default-rtdb.europe-west1.firebasedatabase.app',
+    databaseURL:
+        'https://terrains-game-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'terrains-game.appspot.com',
-    iosClientId: '314214328555-atc54gr7b133m1l5345guoc7ls6nemm7.apps.googleusercontent.com',
+    iosClientId:
+        '314214328555-atc54gr7b133m1l5345guoc7ls6nemm7.apps.googleusercontent.com',
     iosBundleId: 'tech.bam.terrains',
   );
 }

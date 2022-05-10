@@ -5,44 +5,33 @@ import 'package:terrains/domain/entities/player.dart';
 import 'package:terrains/domain/entities/terrain.dart';
 import 'package:terrains/grid.dart';
 
-const int gridWidth = 10;
-const int gridHeight = 19;
-
 class TerrainGame extends StatefulWidget {
-  const TerrainGame({Key? key}) : super(key: key);
+  final Function onPlayed;
+  final TerrainPlayer currentPlayer;
+
+  const TerrainGame(
+      {Key? key, required this.onPlayed, required this.currentPlayer})
+      : super(key: key);
 
   @override
   State<TerrainGame> createState() => _TerrainGameState();
 }
 
 class _TerrainGameState extends State<TerrainGame> {
-  final _players = [
-    TerrainPlayer.sea(),
-    TerrainPlayer.jungle(),
-    TerrainPlayer.volcano()
-  ];
-  int _currentPlayerIndex = 0;
-  final terrainCubit = TerrainCubit(gridWidth, gridHeight);
-
-  _nextPlayer() {
-    setState(() {
-      _currentPlayerIndex = (_currentPlayerIndex + 1) % _players.length;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => terrainCubit,
-      child: TerrainGrid(
-          data: terrainCubit.state,
+    final terrainCubit = TerrainCubit(10, 20);
+    return BlocBuilder<TerrainCubit, List<List<Terrain?>>>(
+      bloc: terrainCubit,
+      builder: (context, state) => TerrainGrid(
+          data: state,
           onCellAtPositionTapped: (location) {
             try {
               terrainCubit.addTerrain(Terrain(
                 location: location,
-                color: _players[_currentPlayerIndex].terrain.color,
+                type: widget.currentPlayer.type,
               ));
-              _nextPlayer();
+              widget.onPlayed();
             } catch (error) {
               showDialog(
                   context: context,

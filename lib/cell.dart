@@ -24,7 +24,7 @@ class TerrainCell extends StatelessWidget {
         }
       },
       child: Container(
-        color: terrain != null ? terrain!.color : Colors.white,
+        color: terrain != null ? terrain!.type.color : Colors.white,
       ),
     );
   }
