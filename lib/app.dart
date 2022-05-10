@@ -41,7 +41,10 @@ class _TerrainsAppState extends State<TerrainsApp> {
           home: Scaffold(
             appBar: AppBar(title: const Text('Terrains')),
             body: state.status == GameStatus.started
-                ? const TerrainGame()
+                ? TerrainGame(
+                    currentPlayer: state.currentPlayer!,
+                    onPlayed: gameCubit.nextTurn,
+                  )
                 : Center(
                     child: ElevatedButton(
                       onPressed: _startGame,

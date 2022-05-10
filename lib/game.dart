@@ -6,26 +6,18 @@ import 'package:terrains/domain/entities/terrain.dart';
 import 'package:terrains/grid.dart';
 
 class TerrainGame extends StatefulWidget {
-  const TerrainGame({Key? key}) : super(key: key);
+  final Function onPlayed;
+  final TerrainPlayer currentPlayer;
+
+  const TerrainGame(
+      {Key? key, required this.onPlayed, required this.currentPlayer})
+      : super(key: key);
 
   @override
   State<TerrainGame> createState() => _TerrainGameState();
 }
 
 class _TerrainGameState extends State<TerrainGame> {
-  final _players = [
-    TerrainPlayer.sea(),
-    TerrainPlayer.jungle(),
-    TerrainPlayer.volcano()
-  ];
-  int _currentPlayerIndex = 0;
-
-  _nextPlayer() {
-    setState(() {
-      _currentPlayerIndex = (_currentPlayerIndex + 1) % _players.length;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final terrainCubit = TerrainCubit(10, 20);
@@ -37,9 +29,9 @@ class _TerrainGameState extends State<TerrainGame> {
             try {
               terrainCubit.addTerrain(Terrain(
                 location: location,
-                type: _players[_currentPlayerIndex].terrain.type,
+                type: widget.currentPlayer.type,
               ));
-              _nextPlayer();
+              widget.onPlayed();
             } catch (error) {
               showDialog(
                   context: context,

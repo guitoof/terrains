@@ -13,10 +13,11 @@ class GameState {
   final TerrainPlayer? localPlayer;
   final TerrainPlayer? currentPlayer;
 
-  GameState(
-      {this.status = GameStatus.notStarted,
-      this.localPlayer,
-      this.currentPlayer});
+  GameState({
+    this.status = GameStatus.notStarted,
+    this.localPlayer,
+    this.currentPlayer,
+  });
 }
 
 class GameCubit extends Cubit<GameState> {
@@ -58,6 +59,23 @@ class GameCubit extends Cubit<GameState> {
       status: GameStatus.started,
       currentPlayer: currentPlayer,
       localPlayer: newPlayer,
+    ));
+  }
+
+  Future<TerrainPlayer> getNextPlayer(TerrainPlayer currentPlayer) async {
+    final players = await _gameRepository.getRegisteredPlayers();
+    final currentPlayerIndex = players.indexOf(currentPlayer);
+    return players[(currentPlayerIndex + 1) % players.length];
+  }
+
+  void nextTurn() async {
+    if (state.currentPlayer == null) return;
+    final nextPlayer = await getNextPlayer(state.currentPlayer!);
+    _gameRepository.setCurrentPlayer(nextPlayer);
+    emit(GameState(
+      status: state.status,
+      currentPlayer: nextPlayer,
+      localPlayer: state.localPlayer,
     ));
   }
 }
