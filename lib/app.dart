@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:terrains/app/bloc/game_cubit.dart';
+import 'package:terrains/domain/entities/terrain.dart';
 import 'package:terrains/game.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -13,37 +15,42 @@ class TerrainsApp extends StatefulWidget {
 }
 
 class _TerrainsAppState extends State<TerrainsApp> {
-  bool _isGameStarted = false;
+  final GameCubit gameCubit = GameCubit();
 
   void _startGame() async {
     setState(() {
-      GameCubit().startGame();
-      _isGameStarted = true;
+      gameCubit.startGame();
     });
   }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Terrains',
-      theme: ThemeData(
-        appBarTheme: const AppBarTheme(
-          color: Colors.black,
-          titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
-        ),
-      ),
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Terrains')),
-        body: _isGameStarted
-            ? const TerrainGame()
-            : Center(
-                child: ElevatedButton(
-                  onPressed: _startGame,
-                  child: const Text("Start game"),
-                ),
-              ),
-      ),
+    return BlocBuilder<GameCubit, GameState>(
+      bloc: gameCubit,
+      builder: (context, state) {
+        return MaterialApp(
+          title: 'Terrains',
+          theme: ThemeData(
+            appBarTheme: AppBarTheme(
+              color: state.currentPlayer?.type.color ?? Colors.black,
+              titleTextStyle:
+                  const TextStyle(color: Colors.white, fontSize: 20),
+            ),
+          ),
+          home: Scaffold(
+            appBar: AppBar(title: const Text('Terrains')),
+            body: state.status == GameStatus.started
+                ? const TerrainGame()
+                : Center(
+                    child: ElevatedButton(
+                      onPressed: _startGame,
+                      child: const Text("Start game"),
+                    ),
+                  ),
+          ),
+        );
+      },
     );
   }
 }

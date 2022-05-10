@@ -13,14 +13,14 @@ class TerrainCubit extends Cubit<List<List<Terrain?>>> {
 
   TerrainCubit(this.width, this.height)
       : super(_getInitialState(width, height)) {
-    _gameRepository.listenToGame(_onGameUpdate);
+    _gameRepository.listenToTerrains(_onTerrainsUpdate);
   }
 
   static List<List<Terrain?>> _getInitialState(int width, int height) =>
       List.generate(height, (_) => List.generate(width, (_) => null));
 
-  void _onGameUpdate(data) {
-    final terrainsData = Map<String, dynamic>.from(data['terrains']);
+  void _onTerrainsUpdate(data) {
+    final terrainsData = Map<String, dynamic>.from(data);
     final newState = _getInitialState(width, height);
     terrainsData.forEach((key, value) {
       newState[value['location']['y']][value['location']['x']] =
